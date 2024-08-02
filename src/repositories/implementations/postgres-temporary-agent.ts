@@ -24,4 +24,15 @@ export class PostgresTemporaryAgent implements ITemporaryAgentRepository {
 
       return temporaryAgent ? temporaryAgent : null
    }
+
+   async login (email: string, password: string): Promise<TemporaryAgent | null> {
+      const temporaryAgent = await prisma.temporary_agent.findFirst({
+         where: {
+            email,
+            password
+         }
+      })
+
+      return temporaryAgent
+   }
 }
