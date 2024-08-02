@@ -6,7 +6,8 @@
     "start:dev": "tsx watch src/server.ts",
     "start": "node build/server.js",
     "build": "tsup src --out-dir build",
-    "migrate": "prisma migrate dev"
+    "migrate": "prisma migrate dev",
+    "studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
