@@ -3,4 +3,5 @@ export interface ICreateTemporaryAgentRequestDTO {
    email: string
    password: string
    thematic_area: string
+   role: number
 }

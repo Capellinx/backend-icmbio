@@ -8,7 +8,7 @@ export class CreateTemporaryAgent {
       private temporaryAgentRepository: ITemporaryAgentRepository
    ) { }
 
-   async execute({ name, email, password, thematic_area }: ICreateTemporaryAgentRequestDTO) {
+   async execute({ name, email, password, thematic_area, role }: ICreateTemporaryAgentRequestDTO) {
       const temporaryAgentExists = await this.temporaryAgentRepository.findByEmail(email)
 
       if (temporaryAgentExists) {
@@ -17,7 +17,7 @@ export class CreateTemporaryAgent {
       
       const hashedPassword = await PasswordAtuhGuard.hasPasswrod(password)
 
-      const newTemporaryAgent = new TemporaryAgent(name, email, hashedPassword, thematic_area)
+      const newTemporaryAgent = new TemporaryAgent(name, email, hashedPassword, thematic_area, role)
 
       await this.temporaryAgentRepository.save(newTemporaryAgent)
    }

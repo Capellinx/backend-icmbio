@@ -3,13 +3,14 @@ import { ITemporaryAgentRepository } from "../temporaryAgent.repository";
 import { prisma } from "../../../prisma/database"
 
 export class PostgresTemporaryAgent implements ITemporaryAgentRepository {
-   async save({ name, email, password, thematic_area }: TemporaryAgent): Promise<void> {
+   async save({ name, email, password, thematic_area, role }: TemporaryAgent): Promise<void> {
       await prisma.temporary_agent.create({
          data: {
             name,
             email,
             password,
-            thematic_area
+            thematic_area,
+            role
          }
       })
    }

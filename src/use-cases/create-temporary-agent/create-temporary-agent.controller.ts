@@ -6,14 +6,15 @@ export class TemporaryAgentController {
       private createTemporaryAgentUseCase: CreateTemporaryAgent
    ) { }
    async handle(request: Request, response: Response): Promise<Response> {
-      const { name, email, password, thematic_area } = request.body;
+      const { name, email, password, thematic_area, role } = request.body;
 
       try {
          await this.createTemporaryAgentUseCase.execute({
             name,
             email,
             password,
-            thematic_area
+            thematic_area,
+            role
          });
 
          return response.status(201).send()
