@@ -5,3 +5,7 @@ export interface ICreateTemporaryAgentRequestDTO {
    thematic_area: string
    role: number
 }
+export interface ILoginTemporaryAgentRequestDTO {
+   email: string
+   password: string
+}
