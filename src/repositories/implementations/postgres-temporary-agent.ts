@@ -1,6 +1,6 @@
 import { TemporaryAgent } from "../../domain/entities/temporaryAgent";
 import { ITemporaryAgentRepository } from "../temporaryAgent.repository";
-import { prisma } from "../../../prisma/database"
+import prisma from './../../../prisma/database';
 
 export class PostgresTemporaryAgent implements ITemporaryAgentRepository {
    async save({ name, email, password, thematic_area, role }: TemporaryAgent): Promise<void> {
@@ -34,5 +34,26 @@ export class PostgresTemporaryAgent implements ITemporaryAgentRepository {
       })
 
       return temporaryAgent
+   }
+
+   async findById (id: string): Promise<TemporaryAgent | null> {
+      const temporaryAgent = await prisma.temporary_agent.findFirst({
+         where: {
+            id
+         }
+      })
+
+      return temporaryAgent
+   }
+
+   async resetPassword (id: string,password: string): Promise<void> {
+      await prisma.temporary_agent.update({
+         where: {
+            id
+         },
+         data: {
+            password
+         }
+      })
    }
 }
