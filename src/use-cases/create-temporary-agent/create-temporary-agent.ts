@@ -1,11 +1,13 @@
 import { PasswordAtuhGuard } from "../../auth/password.auth";
 import { ICreateTemporaryAgentRequestDTO } from "../../domain/DTOs/temporaryAgent.DTO";
 import { TemporaryAgent } from "../../domain/entities/temporaryAgent";
+import { IPasswordHash } from "../../interfaces/password.interface";
 import { ITemporaryAgentRepository } from "../../repositories/temporaryAgent.repository";
 
 export class CreateTemporaryAgent {
    constructor(
-      private temporaryAgentRepository: ITemporaryAgentRepository
+      private temporaryAgentRepository: ITemporaryAgentRepository,
+      private passwordHash: IPasswordHash
    ) { }
 
    async execute({ name, email, password, thematic_area, role }: ICreateTemporaryAgentRequestDTO) {
@@ -15,7 +17,7 @@ export class CreateTemporaryAgent {
          throw new Error("Temporary agent already exists")
       }
       
-      const hashedPassword = await PasswordAtuhGuard.hasPasswrod(password)
+      const hashedPassword = await this.passwordHash.hashPassword(password)
 
       const newTemporaryAgent = new TemporaryAgent(name, email, hashedPassword, thematic_area, role)
 
