@@ -2,11 +2,13 @@ import { PasswordAtuhGuard } from "../../auth/password.auth";
 import { TokenAuthGuard } from "../../auth/token.auth";
 import { ApiError } from "../../config/error/api.error";
 import { ILoginTemporaryAgentRequestDTO } from "../../domain/DTOs/temporaryAgent.DTO";
+import { IPasswordHash } from "../../interfaces/password.interface";
 import { ITemporaryAgentRepository } from "../../repositories/temporaryAgent.repository";
 
 export class LoginTemporaryAgentUseCase {
    constructor(
-      private temporaryAgentRepository: ITemporaryAgentRepository
+      private temporaryAgentRepository: ITemporaryAgentRepository,
+      private passwordHash: IPasswordHash
    ) { }
 
    async execute({ email, password }: ILoginTemporaryAgentRequestDTO): Promise<any> {
@@ -16,7 +18,7 @@ export class LoginTemporaryAgentUseCase {
          throw new ApiError("Temporary agent not found", 404)
       }
 
-      const passwordMatch = await PasswordAtuhGuard.comparePassword(password, temporaryAgentExists.password)
+      const passwordMatch = await this.passwordHash.comparePassword(password, temporaryAgentExists.password)
 
       if(!passwordMatch){
          throw new ApiError("Incorrect password", 401)
