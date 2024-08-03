@@ -9,3 +9,6 @@ export interface ILoginTemporaryAgentRequestDTO {
    email: string
    password: string
 }
+export interface ISendMessageToResetPasswordRequestDTO {
+   email: string
+}
