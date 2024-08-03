@@ -13,13 +13,13 @@ export class LoginTemporaryAgentUseCase {
       const temporaryAgentExists = await this.temporaryAgentRepository.findByEmail(email)
 
       if(!temporaryAgentExists?.email){
-         return new ApiError("Temporary agent not found", 404)
+         throw new ApiError("Temporary agent not found", 404)
       }
 
       const passwordMatch = await PasswordAtuhGuard.comparePassword(password, temporaryAgentExists.password)
 
       if(!passwordMatch){
-         return new ApiError("Incorrect password", 401)
+         throw new ApiError("Incorrect password", 401)
       }
       
       const token = await TokenAuthGuard.generateToken(temporaryAgentExists.id)
