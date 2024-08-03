@@ -17,3 +17,7 @@ export const loginTemporaryAgentSchema = z.object({
 export const sendMessageToResetPasswordSchema = z.object({
    email: z.string().email().min(1),
 })
+
+export const resetPasswordTemporaryAgentSchema = z.object({
+   password: z.string().min(1),
+})
