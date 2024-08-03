@@ -14,7 +14,7 @@ export class handleErrors {
       }
 
       if (error instanceof ZodError) {
-         return res.status(500).json({ error: error.errors });
+         return res.status(500).json(error.errors);
       }
       
       return res.status(500).json({ message: "Internal Server Error." })
