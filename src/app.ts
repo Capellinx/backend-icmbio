@@ -1,7 +1,7 @@
-import express, { json }  from "express";
+import "express-async-errors"
+import express, { json, NextFunction, Request, Response }  from "express";
 import { temporaryAgentRouter } from "./routes/temporary-agent.routes";
 import { handleErrors } from "./middlewares/handle-error.middleware";
-import "express-async-errors"
 
 export const app = express()
 
