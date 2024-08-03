@@ -7,11 +7,10 @@ export const registerTemporaryAgentSchema = z.object({
    password: z.string().min(1),
    thematic_area: z.string().min(1),
    role: z.number().int().min(1)
-})
+}).omit({ id: true })	
 
 export const loginTemporaryAgentSchema = z.object({
    email: z.string().email().min(1),
    password: z.string().min(1),
 })
 
-export const registerSchema = registerTemporaryAgentSchema.omit({ id: true })
