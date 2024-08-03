@@ -3,9 +3,11 @@ import { createTemporaryAgentController } from "../use-cases/create-temporary-ag
 import { loginTemporaryAgentController } from "../use-cases/login-temporary-agent";
 import { ValidateBody } from "../middlewares/validate-body.middleware";
 import { sendMessageToResetPasswordController } from "../use-cases/send-message-to-reset-password";
+import { resetPasswordTemporaryAgentController } from "../use-cases/reset-password-temporary-agent";
 import {
    loginTemporaryAgentSchema,
    registerTemporaryAgentSchema,
+   resetPasswordTemporaryAgentSchema,
    sendMessageToResetPasswordSchema
 } from "../schemas/temporary-agent.schema";
 
@@ -30,3 +32,9 @@ temporaryAgentRouter.post("/send-email",
       return sendMessageToResetPasswordController.handle(request, response)
    }
 )
+
+temporaryAgentRouter.put("/reset-password/:id", 
+   ValidateBody.execute({ body: resetPasswordTemporaryAgentSchema }),
+   async (request, response) => {
+   return resetPasswordTemporaryAgentController.handle(request, response)
+})
