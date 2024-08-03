@@ -1,5 +1,15 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 
-export const prisma = new PrismaClient({
+const prisma = new PrismaClient({
    log: ["query"]
 });
+
+export async function connect() {
+   await prisma.$connect();
+}
+
+export async function cleanup() {
+   await prisma.$disconnect();
+}
+
+export default prisma;
