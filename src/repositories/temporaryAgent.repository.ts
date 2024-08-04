@@ -6,4 +6,5 @@ export interface ITemporaryAgentRepository {
    login: (email: string, password: string) => Promise<TemporaryAgent | null>
    resetPassword: (id: string, password: string) => Promise<void>
    findById: (id: string) => Promise<TemporaryAgent | null>
+   update: (id: string, temporaryAgent: Omit<Partial<TemporaryAgent>, "id" | "role">) => Promise<void>
 }
