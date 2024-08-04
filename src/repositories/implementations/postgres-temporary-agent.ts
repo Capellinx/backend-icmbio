@@ -25,7 +25,7 @@ export class PostgresTemporaryAgent implements ITemporaryAgentRepository {
       return temporaryAgent ? temporaryAgent : null
    }
 
-   async login (email: string, password: string): Promise<TemporaryAgent | null> {
+   async login(email: string, password: string): Promise<TemporaryAgent | null> {
       const temporaryAgent = await prisma.temporary_agent.findFirst({
          where: {
             email,
@@ -36,7 +36,7 @@ export class PostgresTemporaryAgent implements ITemporaryAgentRepository {
       return temporaryAgent
    }
 
-   async findById (id: string): Promise<TemporaryAgent | null> {
+   async findById(id: string): Promise<TemporaryAgent | null> {
       const temporaryAgent = await prisma.temporary_agent.findFirst({
          where: {
             id
@@ -46,13 +46,26 @@ export class PostgresTemporaryAgent implements ITemporaryAgentRepository {
       return temporaryAgent
    }
 
-   async resetPassword (id: string,password: string): Promise<void> {
+   async resetPassword(id: string, password: string): Promise<void> {
       await prisma.temporary_agent.update({
          where: {
             id
          },
          data: {
             password
+         }
+      })
+   }
+
+   async update(id: string, { name, email, thematic_area }: Omit<Partial<TemporaryAgent>, "id" | "role">): Promise<void> {
+      await prisma.temporary_agent.update({
+         where: {
+            id
+         },
+         data: {
+            name,
+            email,
+            thematic_area
          }
       })
    }
