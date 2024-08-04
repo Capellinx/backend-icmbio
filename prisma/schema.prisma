@@ -6,11 +6,43 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model temporary_agent {
   id            String @id @default(uuid()) @db.VarChar(36)
   role          Int    @db.Integer
   name          String @db.VarChar(225)
   email         String @unique @db.VarChar(100)
   password      String @db.VarChar(100)
-  thematic_area String @db.VarChar(100)
+  thematic_area String @db.VarChar(36)
+
+  fieldSheet fieldSheet[]
+  anwsers    answer[]
+}
+
+model fieldSheet {
+  id                 String          @id @default(uuid()) @db.VarChar(36)
+  title              String          @db.VarChar(50)
+  description        String          @db.VarChar(100)
+  temporary_agentId  String          @db.VarChar(36)
+  temporary_agent_id temporary_agent @relation(fields: [temporary_agentId], references: [id])
+
+  questions questions[]
+  anwsers   answer[]
+}
+
+model questions {
+  id           String     @id @default(uuid()) @db.VarChar(36)
+  title        String     @db.VarChar(50)
+  description  String     @db.VarChar(100)
+  fieldSheetId String     @db.VarChar(36)
+  fieldSheet   fieldSheet @relation(fields: [fieldSheetId], references: [id])
+}
+
+model answer {
+  id                 String @id @default(uuid()) @db.VarChar(36)
+  field_sheet_id     String @db.VarChar(36)
+  temporary_agent_id String @db.VarChar(36)
+
+  fieldSheet      fieldSheet      @relation(fields: [field_sheet_id], references: [id])
+  temporary_agent temporary_agent @relation(fields: [temporary_agent_id], references: [id])
 }
