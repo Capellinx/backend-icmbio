@@ -1,3 +1,18 @@
+type Role = {
+   ADMIN: "ADMIN",
+   USER: "USER"
+}
+interface IProps {
+   name: string
+   email: string
+   password: string
+   person_type: string
+   cpf: string
+   phone: string
+   createdAt: Date
+   updatedAt: Date
+   role: Role
+}
 
 export class Collaborator {
    public id: string
@@ -6,17 +21,24 @@ export class Collaborator {
    public cpf: string
    public phone: string
    public password: string
-   public createdAt: Date
    public person_type: string
+   public createdAt: Date
+   public updatedAt: Date
+   public role: Role
 
-   constructor(id: string, name: string, email: string, password: string, createdAt: Date, person_type: string, cpf: string, phone: string) {
+
+   constructor(props: IProps, id?: string) {
       this.id = id ?? crypto.randomUUID()
-      this.name = name
-      this.email = email
-      this.cpf = cpf
-      this.phone = phone
-      this.password = password
-      this.createdAt = createdAt
-      this.person_type = person_type
+      this.name = props.name
+      this.email = props.email
+      this.cpf = props.cpf
+      this.phone = props.phone
+      this.password = props.password
+      this.createdAt = props.createdAt
+      this.person_type = props.person_type
+      this.person_type = props.person_type
+      this.updatedAt = props.updatedAt
+      this.role = props.role
+
    }
 }
