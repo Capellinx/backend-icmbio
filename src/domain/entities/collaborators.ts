@@ -1,12 +1,9 @@
-type Role = {
-   ADMIN: "ADMIN",
-   USER: "USER"
-}
+import { PersonType, Role } from "@prisma/client"
 interface IProps {
    name: string
    email: string
    password: string
-   person_type: string
+   person_type: PersonType
    cpf: string
    phone: string
    createdAt: Date
@@ -21,7 +18,7 @@ export class Collaborator {
    public cpf: string
    public phone: string
    public password: string
-   public person_type: string
+   public person_type: PersonType
    public createdAt: Date
    public updatedAt: Date
    public role: Role
