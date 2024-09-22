@@ -1,3 +1,11 @@
+import { PostgresCollaboratorService } from "../../repositories/implementations/postgres-collaborator";
+import { CreateCollaboratorUseCase } from "./create-collaborator";
+import { CreateCollaboratorController } from "./create-collaborator.controller";
 
+const postgresCollaborator = new PostgresCollaboratorService()
 
-// export const createCollaboratorUseCase = new CreateCollaboratorUseCase(collaboratorsRepository)
+const createCollaboratorUseCase = new CreateCollaboratorUseCase(postgresCollaborator)
+
+const createCollaboratorController = new CreateCollaboratorController(createCollaboratorUseCase)
+
+export { createCollaboratorController }
