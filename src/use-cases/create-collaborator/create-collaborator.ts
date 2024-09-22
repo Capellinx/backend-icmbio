@@ -3,11 +3,13 @@ import { CreateCollaboratorDTO } from "../../domain/dto/collaborator";
 import { Collaborator } from "../../domain/entities/collaborators";
 import { ApiError } from "../../error";
 import { ICollaboratorsRepository } from "../../repositories/collaborators";
+import { IEncryptionPasswordService } from "../../services/encryption-password.service";
 
 
 export class CreateCollaboratorUseCase {
    constructor(
-      private collaboratorsRepository: ICollaboratorsRepository
+      private collaboratorsRepository: ICollaboratorsRepository,
+      private encryptPasswordService: IEncryptionPasswordService
    ) { }
 
    async execute(payload: CreateCollaboratorDTO): Promise<CreateCollaboratorUseCase.Output> {
@@ -15,10 +17,12 @@ export class CreateCollaboratorUseCase {
 
       if (collaborator) throw new ApiError("Collaborator already exists", 400)
 
+      const password = await this.encryptPasswordService.encrypt(payload.password);
+
       const newCollaborator = new Collaborator({
          name: payload.name,
          email: payload.email,
-         password: payload.password,
+         password,
          person_type: payload.person_type,
          cpf: payload.cpf,
          phone: payload.phone,
