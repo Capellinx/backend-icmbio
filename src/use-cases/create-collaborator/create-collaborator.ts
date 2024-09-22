@@ -4,6 +4,7 @@ import { Collaborator } from "../../domain/entities/collaborators";
 import { ApiError } from "../../error";
 import { ICollaboratorsRepository } from "../../repositories/collaborators";
 import { IEncryptionPasswordService } from "../../services/encryption-password.service";
+import { removeCaracteres } from "../../utils/remove-caracteres";
 
 
 export class CreateCollaboratorUseCase {
@@ -24,8 +25,8 @@ export class CreateCollaboratorUseCase {
          email: payload.email,
          password,
          person_type: payload.person_type,
-         cpf: payload.cpf,
-         phone: payload.phone,
+         cpf: removeCaracteres(payload.cpf),
+         phone: removeCaracteres(payload.phone),
          role: payload.role!,
          createdAt: new Date(),
          updatedAt: new Date()
