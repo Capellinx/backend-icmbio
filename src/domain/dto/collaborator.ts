@@ -8,4 +8,5 @@ export type CreateCollaboratorDTO = {
    person_type: PersonType
    cpf: string
    phone: string
+   role?: Role 
 }
