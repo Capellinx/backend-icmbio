@@ -1,7 +1,7 @@
 import { CreateCollaboratorDTO } from "../domain/dto/collaborator";
 
 export interface ICollaboratorsRepository {
-   save({ name, email, password, createdAt, person_type, cpf, phone }: CreateCollaboratorDTO): Promise<void>
+   save({ name, email, password, person_type, cpf, phone }: CreateCollaboratorDTO): Promise<void>
    findByEmail(email: string): Promise<any>
 }
 
