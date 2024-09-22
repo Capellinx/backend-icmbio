@@ -8,28 +8,21 @@ interface IRequestSchemas {
 }
 
 export class ZodRequestValidate {
-   static execute(schema: IRequestSchemas) {
+   static execute(schemas: IRequestSchemas) {
       return async (req: Request, res: Response, next: NextFunction) => {
-         try {
-            if (schema.params) {
-               req.params = await schema.params.parseAsync(req.params);
-            }
-
-            if (schema.body) {
-               req.body = await schema.body.parseAsync(req.body);
-            }
-
-            if (schema.query) {
-               req.query = await schema.query.parseAsync(req.query);
-            }
-            next();
-
-         } catch (error) {
-            if (error instanceof ZodError) {
-               return res.status(409).json({ message: error.errors });
-
-            }
+         if (schemas.params) {
+            req.params = await schemas.params.parseAsync(req.params);
          }
-      }
+
+         if (schemas.body) {
+            req.body = await schemas.body.parseAsync(req.body);
+         }
+
+         if (schemas.query) {
+            req.query = await schemas.query.parseAsync(req.query);
+         }
+
+         next();
+      };
    }
 }
