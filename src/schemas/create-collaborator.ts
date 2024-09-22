@@ -1,4 +1,4 @@
-import { PersonType } from "@prisma/client";
+import { PersonType, Role } from "@prisma/client";
 import { z } from "zod";
 
 
@@ -10,6 +10,7 @@ export const createCollaboratorSchema = z.object({
    person_type: z.nativeEnum(PersonType),
    cpf: z.string(),
    phone: z.string(),
+   role: z.nativeEnum(Role).optional().default(Role.USER)
 }).omit({
    id: true
 })
