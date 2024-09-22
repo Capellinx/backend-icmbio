@@ -10,10 +10,10 @@ export class CreateCollaboratorUseCase {
       private collaboratorsRepository: ICollaboratorsRepository
    ) { }
 
-   async execute(payload: CreateCollaboratorDTO): Promise<void> {
+   async execute(payload: CreateCollaboratorDTO): Promise<CreateCollaboratorUseCase.Output> {
       const collaborator = await this.collaboratorsRepository.findByEmail(payload.email);
 
-      if (collaborator) throw new ApiError("Collaborator already exists", 400);
+      if (collaborator) throw new ApiError("Collaborator already exists", 400)
 
       const newCollaborator = new Collaborator({
          name: payload.name,
@@ -22,13 +22,23 @@ export class CreateCollaboratorUseCase {
          person_type: payload.person_type,
          cpf: payload.cpf,
          phone: payload.phone,
-         role: Role.USER,
+         role: payload.role!,
          createdAt: new Date(),
          updatedAt: new Date()
       });
 
       await this.collaboratorsRepository.save(newCollaborator)
 
-      return
+      return {
+         success: true,
+         id: newCollaborator.id
+      }
+   }
+}
+
+export namespace CreateCollaboratorUseCase {
+   export type Output = {
+      success: boolean
+      id?: string
    }
 }
