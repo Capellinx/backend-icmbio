@@ -2,7 +2,7 @@ import Jwt from "jsonwebtoken";
 import { env } from "../../env";
 import { IToken } from "../token.service";
 
-export class JsonWebToken implements IToken {
+export class JsonWebTokenService implements IToken {
    async generateToken(payload: Record<string, any>): Promise<string> {
       const accessToken = Jwt.sign(payload, env.JWT_SECRET, { expiresIn: '8h' })
       return accessToken
@@ -13,5 +13,3 @@ export class JsonWebToken implements IToken {
       return refreshToken
    }
 }
-
-export const jsonWebToken = new JsonWebToken()
