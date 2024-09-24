@@ -32,4 +32,16 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
          }
       })
    }
+
+   async existCpf(cpf: string): Promise<boolean> {
+      const collaborator = await prisma.collaborator.findFirst({
+         where: {
+            cpf
+         }
+      })
+
+      console.log(collaborator);
+
+      return collaborator ? true : false
+   }
 }
