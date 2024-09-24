@@ -1,7 +1,5 @@
-import { Collaborator, Role } from "@prisma/client";
+import { Collaborator } from "@prisma/client";
 import { prisma } from "../../../prisma/prisma";
-import { CreateCollaboratorDTO } from "../../domain/dto/collaborator";
-import { ApiError } from "../../error";
 import { ICollaboratorsRepository } from "../collaborators";
 
 
@@ -40,7 +38,6 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
          }
       })
 
-      console.log(collaborator);
 
       return collaborator ? true : false
    }
