@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
 import { ApiError } from "../error";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { ZodError } from "zod";
@@ -13,13 +13,13 @@ export class HandleErros {
       }
 
       if (error instanceof PrismaClientKnownRequestError) {
-         return res.status(500).json({ error: 'Internal Server Error.' });
+         return res.status(500).json({ error: error.message });
       }
 
       if (error instanceof ZodError) {
          return res.status(500).json(error.errors);
       }
 
-      return res.status(500).json({ message: "Internal Server Error." })
+      return res.status(500).json({ message: error.message });
    }
 }
