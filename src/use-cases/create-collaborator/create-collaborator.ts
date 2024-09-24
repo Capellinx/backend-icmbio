@@ -1,11 +1,11 @@
 import { Role } from "@prisma/client";
-import { CreateCollaboratorDTO } from "../../domain/dto/collaborator";
 import { Collaborator } from "../../domain/entities/collaborators";
 import { ApiError } from "../../error";
 import { ICollaboratorsRepository } from "../../repositories/collaborators";
 import { IEncryptionPasswordService } from "../../services/encryption-password.service";
 import { removeCaracteres } from "../../utils/remove-caracteres";
 import { CheckCpfExistUseCase } from "../collaborator/check-cpf-exist/check-cpf-exist";
+import { CreateCollaboratorDTO } from "./create-collaborator-dto";
 
 
 export class CreateCollaboratorUseCase {

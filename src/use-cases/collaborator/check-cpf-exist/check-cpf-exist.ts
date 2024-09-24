@@ -1,4 +1,3 @@
-import { CreateCollaboratorDTO } from "../../../domain/dto/collaborator";
 import { ApiError } from "../../../error";
 import { ICollaboratorsRepository } from "../../../repositories/collaborators";
 
