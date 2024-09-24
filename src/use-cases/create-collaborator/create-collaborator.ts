@@ -5,16 +5,20 @@ import { ApiError } from "../../error";
 import { ICollaboratorsRepository } from "../../repositories/collaborators";
 import { IEncryptionPasswordService } from "../../services/encryption-password.service";
 import { removeCaracteres } from "../../utils/remove-caracteres";
+import { CheckCpfExistUseCase } from "../collaborator/check-cpf-exist/check-cpf-exist";
 
 
 export class CreateCollaboratorUseCase {
+
    constructor(
       private collaboratorsRepository: ICollaboratorsRepository,
-      private encryptPasswordService: IEncryptionPasswordService
+      private encryptPasswordService: IEncryptionPasswordService,
+      private checkCpfExistUseCase: CheckCpfExistUseCase,
    ) { }
 
    async execute(payload: CreateCollaboratorDTO): Promise<CreateCollaboratorUseCase.Output> {
-      const collaborator = await this.collaboratorsRepository.findByEmail(payload.email);
+      const collaborator = await this.collaboratorsRepository.findByEmail(payload.email)
+      await this.checkCpfExistUseCase.execute(removeCaracteres(payload.cpf))
 
       if (collaborator) throw new ApiError("Collaborator already exists", 400)
 
