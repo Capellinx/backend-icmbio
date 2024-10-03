@@ -1,4 +1,4 @@
-import { CreateCollaboratorDTO } from "../use-cases/create-collaborator/create-collaborator-dto"
+import { CreateCollaboratorDTO } from "../use-cases/collaborator/create-collaborator/create-collaborator-dto"
 export interface ICollaboratorsRepository {
    save({ name, email, password, person_type, cpf, phone }: CreateCollaboratorDTO): Promise<void>
    findByEmail(email: string): Promise<any>

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCollaboratorController } from "../use-cases/create-collaborator";
+import { createCollaboratorController } from "../use-cases/collaborator/create-collaborator";
 import { ZodRequestValidate } from "../middleware/zod-errors.middleware";
 import { createCollaboratorSchema } from "../schemas/create-collaborator";
 import { loginCollaboratorController } from "../use-cases/collaborator/login";
