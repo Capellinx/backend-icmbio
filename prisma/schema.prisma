@@ -17,6 +17,7 @@ enum PersonType {
   PESQUISADOR
   VOLUNTARIO
   ATA
+  ANALISTA
 }
 
 model Collaborator {
@@ -30,5 +31,6 @@ model Collaborator {
   role        Role       @default(USER)
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @updatedAt @map("updated_at")
+
   @@map("collaborators")
 }
