@@ -5,12 +5,15 @@ import { removeCaracteres } from "../../../utils/remove-caracteres";
 import { CheckCpfExistUseCase } from "../check-cpf-exist/check-cpf-exist";
 import { CreateCollaboratorDTO } from "./create-collaborator-dto";
 import { IEmailService } from "../../../services/email.service";
+import randomPassword from "../../../utils/generate-random-password";
+import { IEncryptionPasswordService } from "../../../services/encryption-password.service";
 export class CreateCollaboratorUseCase {
 
    constructor(
       private collaboratorsRepository: ICollaboratorsRepository,
       private checkCpfExistUseCase: CheckCpfExistUseCase,
       private emailService: IEmailService,
+      private encryptPasswordService: IEncryptionPasswordService
    ) { }
 
    async execute(payload: CreateCollaboratorDTO): Promise<CreateCollaboratorUseCase.Output> {
@@ -18,14 +21,14 @@ export class CreateCollaboratorUseCase {
       
       await this.checkCpfExistUseCase.execute(removeCaracteres(payload.cpf))
 
-      const randomPassword = Math.random().toString(36).slice(-16)
-
       if (collaborator) throw new ApiError("Collaborator already exists", 400)
+
+      const password = await this.encryptPasswordService.encrypt(randomPassword())
 
       const newCollaborator = new Collaborator({
          name: payload.name,
          email: payload.email,
-         password: randomPassword,
+         password,
          person_type: payload.person_type,
          cpf: removeCaracteres(payload.cpf),
          phone: removeCaracteres(payload.phone),
