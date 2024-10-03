@@ -106,4 +106,20 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
 
       return
    }
+
+   async findPublicId(id: string): Promise<ICollaboratorsRepository.FindPublicIdOutput> {
+      const collaborator = await prisma.collaborator.findFirst({
+         where: {
+            public_id: id
+         },
+         select: {
+            email: true,
+            name: true,
+            phone: true,
+            person_type: true,
+         }
+      })
+
+      return collaborator
+   }
 }
