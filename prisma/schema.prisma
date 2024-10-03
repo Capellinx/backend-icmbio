@@ -34,9 +34,10 @@ model Collaborator {
   phone               String             @db.VarChar(20)
   password            String
   person_type         PersonType
+  role                Role               @default(USER)
   registration_status RegistrationStatus @default(PENDING)
   first_login         Boolean            @default(true)
-  role                Role               @default(USER)
+  public_id           String             @db.VarChar(200)
   createdAt           DateTime           @default(now()) @map("created_at")
   updatedAt           DateTime           @updatedAt @map("updated_at")
 
