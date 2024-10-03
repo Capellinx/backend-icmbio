@@ -17,19 +17,19 @@ export class NodeMailerService implements IEmailService {
          }
       })
    }
-   
-   async sendEmail(message: IMessage): Promise<void> {
+
+   async sendEmail({ body, to, from, subject }: IMessage): Promise<void> {
       await this.transporter.sendMail({
          to: {
-            name: message.to.name,
-            address: message.to.email
+            name: to.name,
+            address: to.email
          },
          from: {
-            name: message.from.name,
-            address: message.from.email
+            name: from.name,
+            address: from.email
          },
-         subject: message.subject,
-         html: message.body
+         subject: subject,
+         html: body
       })
 
       return
