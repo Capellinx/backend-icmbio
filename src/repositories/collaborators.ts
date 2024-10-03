@@ -8,6 +8,7 @@ export interface ICollaboratorsRepository {
    approveCollaborator(id: string, password: string): Promise<ICollaboratorsRepository.ApproveCollaboratorOutput>
    rejectCollaborator(id: string): Promise<void>
    updatePassword(id: string, password: string): Promise<void>
+   findPublicId(id: string): Promise<ICollaboratorsRepository.FindPublicIdOutput>
 }
 
 export namespace ICollaboratorsRepository {
@@ -27,5 +28,12 @@ export namespace ICollaboratorsRepository {
    export type ApproveCollaboratorOutput = {
       name: string,
       email: string
+   }
+
+   export type FindPublicIdOutput = {
+      email: string
+      name: string
+      phone: string
+      person_type: string
    }
 }
