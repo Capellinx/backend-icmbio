@@ -5,7 +5,7 @@ export interface ICollaboratorsRepository {
    findByEmail(email: string): Promise<any>
    existCpf(cpf: string): Promise<boolean>
    findById(id: string): Promise<ICollaboratorsRepository.FindByIdOutput | null>
-   approveCollaborator(id: string): Promise<void>
+   approveCollaborator(id: string, password: string): Promise<ICollaboratorsRepository.ApproveCollaboratorOutput>
    rejectCollaborator(id: string): Promise<void>
 }
 
@@ -21,5 +21,10 @@ export namespace ICollaboratorsRepository {
       person_type: string
       phone: string
       registration_status: RegistrationStatus
+   }
+
+   export type ApproveCollaboratorOutput = {
+      name: string,
+      email: string
    }
 }
