@@ -61,3 +61,9 @@ collaboratorRouter.post(
    }
 )
 
+collaboratorRouter.get(
+   "/collaborator/:publicId",
+   async (request, response) => {
+      return await getPublicInformationController.handle(request, response)
+   }
+)
