@@ -1,7 +1,7 @@
 import { Collaborator } from "@prisma/client";
 import { prisma } from "../../../prisma/prisma";
 import { ICollaboratorsRepository } from "../collaborators";
-
+import { randomUUID } from "crypto"
 
 export class PostgresCollaboratorService implements ICollaboratorsRepository {
    async findByEmail(email: string): Promise<Collaborator | null> {
@@ -15,7 +15,7 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
       return collaborator ? collaborator : null
    }
 
-   async save({ name, email, password, person_type, cpf, phone, createdAt, role, updatedAt, public_id }: Collaborator): Promise<void> {
+   async save({ name, email, password, person_type, cpf, phone, createdAt, role, updatedAt }: Collaborator): Promise<void> {
       await prisma.collaborator.create({
          data: {
             name,
@@ -25,7 +25,6 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
             cpf,
             phone,
             role,
-            public_id,
             createdAt,
             updatedAt
          }
@@ -70,6 +69,7 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
          },
          data: {
             password,
+            public_id: randomUUID(),
             registration_status: "APPROVED"
          }
       })
@@ -120,7 +120,7 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
          }
       })
 
-      if(!collaborator) return null
+      if (!collaborator) return null
 
       return collaborator
    }
