@@ -33,7 +33,6 @@ export class CreateCollaboratorUseCase {
          person_type: payload.person_type,
          cpf: removeCaracteres(payload.cpf),
          phone: removeCaracteres(payload.phone),
-         public_id: crypto.randomUUID(),
          role: payload.role!,
          createdAt: new Date(),
          updatedAt: new Date()
