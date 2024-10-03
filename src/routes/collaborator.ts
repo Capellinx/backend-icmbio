@@ -6,6 +6,8 @@ import { loginCollaboratorController } from "../use-cases/collaborator/login";
 import { loginCollaboratorSchema } from "../schemas/login-collaborator";
 import { approveCollaboratorController } from "../use-cases/collaborator/approve-collaborator";
 import { rejectedCollaboratorController } from "../use-cases/collaborator/rejected-collaborator";
+import { firstLoginController } from "../use-cases/collaborator/first-login";
+import { firstLoginCollaboratorSchema } from "../schemas/first-login-collaborator";
 
 
 export const collaboratorRouter = Router()
@@ -37,5 +39,13 @@ collaboratorRouter.post(
    "/rejected/:id/collaborator",
    async (request, response) => {
       return await rejectedCollaboratorController.handle(request, response)
+   }
+)
+
+collaboratorRouter.put(
+   "/first-login/:id/collaborator",
+   ZodRequestValidate.execute({ body: firstLoginCollaboratorSchema }),
+   async (request, response) => {
+      return await firstLoginController.handle(request, response)
    }
 )
