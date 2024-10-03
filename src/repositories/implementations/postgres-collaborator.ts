@@ -60,4 +60,30 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
 
       return { collaborator }
    }
+
+   async approveCollaborator(id: string): Promise<void> {
+      await prisma.collaborator.update({
+         where: {
+            id
+         },
+         data: {
+            registration_status: "APPROVED"
+         }
+      })
+
+      return
+   }
+
+   async rejectCollaborator(id: string): Promise<void> {
+      await prisma.collaborator.update({
+         where: {
+            id
+         },
+         data: {
+            registration_status: "REJECTED"
+         }
+      })
+
+      return
+   }
 }
