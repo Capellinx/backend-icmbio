@@ -7,6 +7,7 @@ import { CreateCollaboratorDTO } from "./create-collaborator-dto";
 import { IEmailService } from "../../../services/email.service";
 import randomPassword from "../../../utils/generate-random-password";
 import { IEncryptionPasswordService } from "../../../services/encryption-password.service";
+import crypto from "crypto";
 export class CreateCollaboratorUseCase {
 
    constructor(
@@ -32,6 +33,7 @@ export class CreateCollaboratorUseCase {
          person_type: payload.person_type,
          cpf: removeCaracteres(payload.cpf),
          phone: removeCaracteres(payload.phone),
+         public_id: crypto.randomUUID(),
          role: payload.role!,
          createdAt: new Date(),
          updatedAt: new Date()
