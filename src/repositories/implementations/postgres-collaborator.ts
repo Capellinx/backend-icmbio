@@ -91,4 +91,18 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
 
       return
    }
+
+   async updatePassword(id: string, password: string): Promise<void> {
+      await prisma.collaborator.update({
+         where: {
+            id
+         },
+         data: {
+            first_login: false,
+            password
+         }
+      })
+
+      return
+   }
 }
