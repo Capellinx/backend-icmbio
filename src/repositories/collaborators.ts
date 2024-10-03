@@ -4,6 +4,8 @@ export interface ICollaboratorsRepository {
    findByEmail(email: string): Promise<any>
    existCpf(cpf: string): Promise<boolean>
    findById(id: string): Promise<ICollaboratorsRepository.FindByIdOutput | null>
+   approveCollaborator(id: string): Promise<void>
+   rejectCollaborator(id: string): Promise<void>
 }
 
 export namespace ICollaboratorsRepository {
