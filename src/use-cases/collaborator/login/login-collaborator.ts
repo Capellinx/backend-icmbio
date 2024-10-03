@@ -11,10 +11,19 @@ export class LoginCollaboratorUseCase {
       private tokenService: IToken
    ) { }
 
-   async execute({ email, password }: LoginCollaboratorDTO): Promise<LoginCollaboratorUseCase.Output> {
+   async execute({
+      email,
+      password
+   }: LoginCollaboratorDTO): Promise<LoginCollaboratorUseCase.LoginOutput | LoginCollaboratorUseCase.FirstLoginOutput> {
       const collaborator = await this.collaboratorReposity.findByEmail(email)
 
       if (!collaborator) throw new ApiError("Collaborator not found", 404)
+
+      if (collaborator.first_login === true) {
+         return {
+            first_login: true,
+         }
+      }
 
       const passwordMatch = await this.encryptPasswordService.compare(password, collaborator.password)
 
@@ -22,28 +31,34 @@ export class LoginCollaboratorUseCase {
 
       const token = await this.tokenService.generateToken({ id: collaborator.id })
 
-      console.log(token)
-
       return {
          access_token: token,
          collaborator: {
             id: collaborator.id,
             name: collaborator.name,
             email: collaborator.email,
-            role: collaborator.role
+            collaborator_roles: {
+               role: collaborator.role
+            }
          }
       }
    }
 }
 
 export namespace LoginCollaboratorUseCase {
-   export type Output = {
+   export type LoginOutput = {
       access_token: string
       collaborator: {
          id: string
          name: string
          email: string
-         role: string
+         collaborator_roles: {
+            role: string
+         }
       }
+   }
+
+   export type FirstLoginOutput = {
+      first_login: boolean
    }
 }
