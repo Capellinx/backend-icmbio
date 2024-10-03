@@ -8,6 +8,7 @@ interface IProps {
    phone: string
    createdAt: Date
    updatedAt: Date
+   public_id: string
    role: Role
 }
 
@@ -18,6 +19,7 @@ export class Collaborator {
    public cpf: string
    public phone: string
    public password: string
+   public public_id: string
    public person_type: PersonType
    public createdAt: Date
    public updatedAt: Date
@@ -36,6 +38,7 @@ export class Collaborator {
       this.person_type = props.person_type
       this.updatedAt = props.updatedAt
       this.role = props.role
+      this.public_id = this.id
 
    }
 }
