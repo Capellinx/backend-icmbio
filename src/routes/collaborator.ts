@@ -5,6 +5,7 @@ import { createCollaboratorSchema } from "../schemas/create-collaborator";
 import { loginCollaboratorController } from "../use-cases/collaborator/login";
 import { loginCollaboratorSchema } from "../schemas/login-collaborator";
 import { approveCollaboratorController } from "../use-cases/collaborator/approve-collaborator";
+import { rejectedCollaboratorController } from "../use-cases/collaborator/rejected-collaborator";
 
 
 export const collaboratorRouter = Router()
@@ -29,5 +30,12 @@ collaboratorRouter.post(
    "/approve/:id/collaborator",
    async (request, response) => {
       return await approveCollaboratorController.handle(request, response)
+   }
+)
+
+collaboratorRouter.post(
+   "/rejected/:id/collaborator",
+   async (request, response) => {
+      return await rejectedCollaboratorController.handle(request, response)
    }
 )
