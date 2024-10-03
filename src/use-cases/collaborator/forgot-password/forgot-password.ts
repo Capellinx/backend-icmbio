@@ -10,11 +10,13 @@ export class ForgotPasswordUseCase {
       private emailService: IEmailService
    ) { }
 
-   async execute(email: string){
+   async execute(email: string) {
       const collaborator = await this.collaboratorsRepository.findByEmail(email)
 
       if (!collaborator) throw new ApiError("Collaborator not found", 404)
-         
+
+      if (!collaborator.public_id) throw new ApiError("Collaborator dont have public id", 400)
+
       await this.emailService.sendEmail({
          to: {
             name: collaborator.name,
@@ -27,7 +29,7 @@ export class ForgotPasswordUseCase {
          subject: "ICMBio - Recuperação de senha",
          body: `Ola para recuperar sua senha acesse: ${env.BASE_URL}/reset-password/${collaborator.public_id}`
       })
-      
+
       return
    }
 }
