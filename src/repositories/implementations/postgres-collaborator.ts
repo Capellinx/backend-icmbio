@@ -52,13 +52,14 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
             phone: true,
             email: true,
             name: true,
-            person_type: true
+            person_type: true,
+            registration_status: true
          }
       })
 
       if (!collaborator) return null
 
-      return { collaborator }
+      return collaborator
    }
 
    async approveCollaborator(id: string): Promise<void> {
