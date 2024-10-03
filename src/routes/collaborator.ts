@@ -8,6 +8,9 @@ import { approveCollaboratorController } from "../use-cases/collaborator/approve
 import { rejectedCollaboratorController } from "../use-cases/collaborator/rejected-collaborator";
 import { firstLoginController } from "../use-cases/collaborator/first-login";
 import { firstLoginCollaboratorSchema } from "../schemas/first-login-collaborator";
+import { forgotPasswordCollaboratorSchema } from "../schemas/forgot-password-collaborator";
+import { forgotPasswordController } from "../use-cases/collaborator/forgot-password";
+import { getPublicInformationController } from "../use-cases/collaborator/get-public-information";
 
 
 export const collaboratorRouter = Router()
@@ -49,3 +52,12 @@ collaboratorRouter.put(
       return await firstLoginController.handle(request, response)
    }
 )
+
+collaboratorRouter.post(
+   "/collaborator/forgot-password",
+   ZodRequestValidate.execute({ body: forgotPasswordCollaboratorSchema }),
+   async (request, response) => {
+      return await forgotPasswordController.handle(request, response)
+   }
+)
+
