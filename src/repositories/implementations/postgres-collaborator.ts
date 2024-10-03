@@ -41,4 +41,23 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
 
       return collaborator ? true : false
    }
+
+   async findById(id: string): Promise<ICollaboratorsRepository.FindByIdOutput | null> {
+      const collaborator = await prisma.collaborator.findUnique({
+         where: {
+            id
+         },
+         select: {
+            id: true,
+            phone: true,
+            email: true,
+            name: true,
+            person_type: true
+         }
+      })
+
+      if (!collaborator) return null
+
+      return { collaborator }
+   }
 }
