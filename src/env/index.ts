@@ -10,6 +10,7 @@ const envSchema = z.object({
    EMAIL_PORT: z.coerce.string().describe('The email port'),
    EMAIL_USER: z.string().describe('The email user'),
    EMAIL_PASS: z.string().describe('The email password'),
+   BASE_URL: z.string().describe('The base url of the application (front-end)'),
 });
 
 const _env = envSchema.safeParse(process.env);
