@@ -11,6 +11,8 @@ import { firstLoginCollaboratorSchema } from "../schemas/first-login-collaborato
 import { forgotPasswordCollaboratorSchema } from "../schemas/forgot-password-collaborator";
 import { forgotPasswordController } from "../use-cases/collaborator/forgot-password";
 import { getPublicInformationController } from "../use-cases/collaborator/get-public-information";
+import { resetPasswordSchemaBody, resetPasswordSchemaParams } from './../schemas/reset-password';
+import { resetPasswordController } from "../use-cases/collaborator/reset-password";
 
 
 export const collaboratorRouter = Router()
@@ -65,5 +67,13 @@ collaboratorRouter.get(
    "/collaborator/:publicId",
    async (request, response) => {
       return await getPublicInformationController.handle(request, response)
+   }
+)
+
+collaboratorRouter.put(
+   "/collaborator/:id/reset-password",
+   ZodRequestValidate.execute({body: resetPasswordSchemaBody, params: resetPasswordSchemaParams}),
+   async (request, response) => {
+      return await resetPasswordController.handle(request, response)
    }
 )
