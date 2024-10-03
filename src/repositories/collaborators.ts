@@ -7,6 +7,7 @@ export interface ICollaboratorsRepository {
    findById(id: string): Promise<ICollaboratorsRepository.FindByIdOutput | null>
    approveCollaborator(id: string, password: string): Promise<ICollaboratorsRepository.ApproveCollaboratorOutput>
    rejectCollaborator(id: string): Promise<void>
+   updatePassword(id: string, password: string): Promise<void>
 }
 
 export namespace ICollaboratorsRepository {
