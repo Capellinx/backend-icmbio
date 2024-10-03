@@ -107,7 +107,7 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
       return
    }
 
-   async findPublicId(id: string): Promise<ICollaboratorsRepository.FindPublicIdOutput> {
+   async findPublicId(id: string): Promise<ICollaboratorsRepository.FindPublicIdOutput | null> {
       const collaborator = await prisma.collaborator.findFirst({
          where: {
             public_id: id
@@ -119,6 +119,8 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
             person_type: true,
          }
       })
+
+      if(!collaborator) return null
 
       return collaborator
    }
