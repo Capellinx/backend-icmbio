@@ -4,6 +4,7 @@ import { ZodRequestValidate } from "../middleware/zod-errors.middleware";
 import { createCollaboratorSchema } from "../schemas/create-collaborator";
 import { loginCollaboratorController } from "../use-cases/collaborator/login";
 import { loginCollaboratorSchema } from "../schemas/login-collaborator";
+import { approveCollaboratorController } from "../use-cases/collaborator/approve-collaborator";
 
 
 export const collaboratorRouter = Router()
@@ -21,5 +22,12 @@ collaboratorRouter.post(
    ZodRequestValidate.execute({ body: loginCollaboratorSchema }),
    async (request, response) => {
       return await loginCollaboratorController.handle(request, response)
+   }
+)
+
+collaboratorRouter.post(
+   "/approve/:id/collaborator",
+   async (request, response) => {
+      return await approveCollaboratorController.handle(request, response)
    }
 )
