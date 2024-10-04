@@ -4,7 +4,8 @@ interface IProps {
    email: string
    password: string
    person_type: PersonType
-   cpf: string
+   cpf?: string
+   matricula?: string
    phone: string
    createdAt: Date
    updatedAt: Date
@@ -15,7 +16,8 @@ export class Collaborator {
    public id: string
    public name: string
    public email: string
-   public cpf: string
+   public cpf?: string
+   public matricula?: string
    public phone: string
    public password: string
    public person_type: PersonType
@@ -24,7 +26,7 @@ export class Collaborator {
    public role: Role
 
 
-   constructor(props: IProps, id?: string, public_id?: string) {
+   constructor(props: IProps, id?: string) {
       this.id = id ?? crypto.randomUUID()
       this.name = props.name
       this.email = props.email
@@ -36,5 +38,6 @@ export class Collaborator {
       this.person_type = props.person_type
       this.updatedAt = props.updatedAt
       this.role = props.role
+      this.matricula = props.matricula
    }
 }
