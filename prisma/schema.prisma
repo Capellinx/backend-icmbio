@@ -9,6 +9,10 @@ datasource db {
 
 enum Role {
   USER
+  ANALISTA
+  CONDUTOR
+  PESQUISADOR
+  ATA
   ADMIN
 }
 
