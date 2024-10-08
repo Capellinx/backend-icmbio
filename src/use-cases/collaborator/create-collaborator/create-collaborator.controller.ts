@@ -9,16 +9,17 @@ export class CreateCollaboratorController {
    ) { }
 
    async handle(request: Request, response: Response) {
-      const { name, email, password, person_type, cpf, phone, role } = request.body;
+      const { name, email, person_type, cpf, phone, role, matricula } = request.body;
 
       const { success, id } = await this.createCollaboratorUseCase.execute({
          name,
          email,
-         password,
          person_type,
          cpf,
          role,
-         phone
+         phone,
+         matricula,
+
       })
 
       return response.status(201).json({

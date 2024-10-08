@@ -4,9 +4,10 @@ export interface CreateCollaboratorDTO {
    id?: string
    name: string
    email: string
-   password: string
    person_type: PersonType
+   password?: string,
    cpf: string
+   matricula: string
    phone: string
    role?: Role
 }

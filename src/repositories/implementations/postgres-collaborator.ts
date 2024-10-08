@@ -15,16 +15,17 @@ export class PostgresCollaboratorService implements ICollaboratorsRepository {
       return collaborator ? collaborator : null
    }
 
-   async save({ name, email, password, person_type, cpf, phone, createdAt, role, updatedAt }: Collaborator): Promise<void> {
+   async save({cpf, email, matricula, name, person_type, phone, password, role, createdAt, updatedAt}: ICollaboratorsRepository.SaveCollaboratorInput): Promise<void> {
       await prisma.collaborator.create({
          data: {
             name,
             email,
             password,
             person_type,
-            cpf,
+            cpf: cpf ? cpf : "",
             phone,
             role,
+            matricula,
             createdAt,
             updatedAt
          }

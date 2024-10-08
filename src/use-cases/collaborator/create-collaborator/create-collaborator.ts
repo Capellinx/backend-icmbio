@@ -8,11 +8,11 @@ import { IEmailService } from "../../../services/email.service";
 import randomPassword from "../../../utils/generate-random-password";
 import { IEncryptionPasswordService } from "../../../services/encryption-password.service";
 import crypto from "crypto";
+import { PersonType } from "@prisma/client";
 export class CreateCollaboratorUseCase {
 
    constructor(
       private collaboratorsRepository: ICollaboratorsRepository,
-      private checkCpfExistUseCase: CheckCpfExistUseCase,
       private emailService: IEmailService,
       private encryptPasswordService: IEncryptionPasswordService
    ) { }
@@ -20,23 +20,63 @@ export class CreateCollaboratorUseCase {
    async execute(payload: CreateCollaboratorDTO): Promise<CreateCollaboratorUseCase.Output> {
       const collaborator = await this.collaboratorsRepository.findByEmail(payload.email)
       
-      await this.checkCpfExistUseCase.execute(removeCaracteres(payload.cpf))
-
       if (collaborator) throw new ApiError("Collaborator already exists", 400)
 
       const password = await this.encryptPasswordService.encrypt(randomPassword())
+
+      const usCollaborator = ["ATA", "ANALISTA"]
+
+      if(usCollaborator.includes(payload.person_type)) {
+         const newCollaborator = new Collaborator({
+            name: payload.name,
+            email: payload.email,
+            password,
+            person_type: payload.person_type,
+            cpf: removeCaracteres(payload.cpf!),
+            phone: removeCaracteres(payload.phone),
+            role: payload.person_type === "ANALISTA" ? "ANALISTA" : "ATA",
+            matricula: payload.matricula,
+            createdAt: new Date(),
+            updatedAt: new Date()
+         });
+
+         await this.collaboratorsRepository.save(newCollaborator)
+
+         await this.emailService.sendEmail({
+            to: {
+               name: payload.name,
+               email: payload.email
+            },
+            from: {
+               name: "ICMBio Alcatrazes",
+               email: "icmbioalcatrazes@icmbio.gov.br"
+            },
+            subject: "Usuário cadastrasdo - aguardando aprovação",
+            body: `Parabéns Usuário	cadastrado! aguardar aprovação.`
+         })
+
+         return {
+            success: false,
+            id: newCollaborator.id
+         }
+      }
 
       const newCollaborator = new Collaborator({
          name: payload.name,
          email: payload.email,
          password,
          person_type: payload.person_type,
-         cpf: removeCaracteres(payload.cpf),
+         cpf: removeCaracteres(payload.cpf!),
          phone: removeCaracteres(payload.phone),
-         role: payload.role!,
+         matricula: null!,
+         role: payload.person_type === "CONDUTOR" ? "CONDUTOR" : "PESQUISADOR",
          createdAt: new Date(),
          updatedAt: new Date()
       });
+
+      await this.collaboratorsRepository.save({
+         ...newCollaborator,
+      })
 
       await this.emailService.sendEmail({
          to: {
@@ -50,8 +90,6 @@ export class CreateCollaboratorUseCase {
          subject: "Usuário cadastrasdo - aguardando aprovação",
          body: `Parabéns Usuário	cadastrado! aguardar aprovação.`
       })
-
-      await this.collaboratorsRepository.save(newCollaborator)
 
       return {
          success: true,

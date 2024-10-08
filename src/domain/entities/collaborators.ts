@@ -5,7 +5,7 @@ interface IProps {
    password: string
    person_type: PersonType
    cpf?: string
-   matricula?: string
+   matricula: string
    phone: string
    createdAt: Date
    updatedAt: Date
@@ -17,7 +17,7 @@ export class Collaborator {
    public name: string
    public email: string
    public cpf?: string
-   public matricula?: string
+   public matricula: string
    public phone: string
    public password: string
    public person_type: PersonType
