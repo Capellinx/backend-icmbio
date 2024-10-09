@@ -2,6 +2,7 @@ import Mail from "nodemailer/lib/mailer";
 import { IEmailService, IMessage } from "../email.service";
 import nodemailer from 'nodemailer'
 import { env } from "../../env";
+import path from "path";
 
 
 export class NodeMailerService implements IEmailService {
@@ -29,7 +30,12 @@ export class NodeMailerService implements IEmailService {
             address: from.email
          },
          subject: subject,
-         html: body
+         html: body,
+         attachments: [{
+            filename: 'logo.png',
+            path: path.join(__dirname, '../../../public/logo.png'),
+            cid: 'logo'
+         }]
       })
 
       return
