@@ -9,6 +9,7 @@ import randomPassword from "../../../utils/generate-random-password";
 import { IEncryptionPasswordService } from "../../../services/encryption-password.service";
 import crypto from "crypto";
 import { PersonType } from "@prisma/client";
+import { createTemplate } from "../../../utils/email-template";
 export class CreateCollaboratorUseCase {
 
    constructor(
@@ -88,7 +89,8 @@ export class CreateCollaboratorUseCase {
             email: "icmbioalcatrazes@icmbio.gov.br"
          },
          subject: "Usuário cadastrasdo - aguardando aprovação",
-         body: `Parabéns Usuário	cadastrado! aguardar aprovação.`
+         body: createTemplate(payload.name),
+
       })
 
       return {
